@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    "declaration": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "inlineSourceMap": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "lib",
+    "removeComments": true,
+    "rootDir": "src",
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "es2017",
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "**/__tests__",
+    "./node_modules",
+    "./vscode",
+    "./lib"
+  ]
+}

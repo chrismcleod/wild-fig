@@ -1,0 +1,50 @@
+{
+  "name": "wild-fig",
+  "version": "0.0.1",
+  "description": "Wild Fig resolves dependency trees declared using a flat specification",
+  "main": "lib/index.js",
+  "repository": "https://github.com/chrismcleod/wild-fig",
+  "author": "Chris McLeod <chris@warebots.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "test": "jest",
+    "prepublishOnly": "rm -rf ./lib && (tsc -p ./tsconfig.json || true)"
+  },
+  "dependencies": {
+    "ramda": "^0.25.0",
+    "tslib": "^1.9.2"
+  },
+  "devDependencies": {
+    "@types/benchmark": "^1.0.31",
+    "@types/jest": "^23.1.0",
+    "@types/ramda": "^0.25.33",
+    "benchmark": "^2.1.4",
+    "jest": "^23.1.0",
+    "ts-jest": "^22.4.6",
+    "tslint": "^5.10.0",
+    "tslint-config-airbnb": "^5.9.2",
+    "typescript": "^2.9.2"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/*.ts"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node"
+    ],
+    "transform": {
+      "^.+\\.(ts)$": "ts-jest"
+    },
+    "testRegex": ".*/__tests__/.*\\.spec\\.ts?$",
+    "globals": {
+      "ts-jest": {
+        "useBabelrc": false
+      }
+    }
+  }
+}
