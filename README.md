@@ -12,7 +12,7 @@ export const dependencies: Dependency[] = [ {
   factory: async () => process.env,
 }, {
   id: 'myService',
-  dependsOn: [ 'env', 'myProvider ],
+  dependsOn: [ 'env', 'myProvider' ],
   factory: async ({ env, myProvider }) => {
     return await myService.create({
       host: env.ES_HOST,
