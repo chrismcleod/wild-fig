@@ -36,4 +36,17 @@ describe('resolve', () => {
     expect(services.g).not.toBeFalsy();
     expect(services.g.deps).toBeFalsy();
   });
+
+  it('invokes callback with result of each resolution invocation', async () => {
+    const spy = jest.fn();
+    const services = await resolve(dependencies, spy);
+    expect(spy).toHaveBeenCalledWith(services.a);
+    expect(spy).toHaveBeenCalledWith(services.b);
+    expect(spy).toHaveBeenCalledWith(services.c);
+    expect(spy).toHaveBeenCalledWith(services.d);
+    expect(spy).toHaveBeenCalledWith(services.e);
+    expect(spy).toHaveBeenCalledWith(services.f);
+    expect(spy).toHaveBeenCalledWith(services.g);
+    expect(spy).toHaveBeenCalledTimes(7);
+  });
 });

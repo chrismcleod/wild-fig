@@ -11,9 +11,11 @@
     "test": "jest",
     "prepublishOnly": "rm -rf ./lib && (tsc -p ./tsconfig.json || true)"
   },
+  "peerDependencies": {
+    "tslib": "^1.9.3"
+  },
   "dependencies": {
-    "ramda": "^0.25.0",
-    "tslib": "^1.9.2"
+    "ramda": "^0.25.0"
   },
   "devDependencies": {
     "@types/benchmark": "^1.0.31",
@@ -22,6 +24,7 @@
     "benchmark": "^2.1.4",
     "jest": "^23.1.0",
     "ts-jest": "^22.4.6",
+    "tslib": "^1.9.3",
     "tslint": "^5.10.0",
     "tslint-config-airbnb": "^5.9.2",
     "typescript": "^2.9.2"
