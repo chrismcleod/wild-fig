@@ -2,7 +2,7 @@ import { difference, filter, isEmpty, omit } from 'ramda';
 
 import { Dependency } from './types';
 
-const resolveLevel = async (list: Dependency[], resolved: { [key: string]: Dependency }, level: string[], callback?: (context: any) => any) => {
+const resolveLevel = async (list: Dependency[], resolved: { [key: string]: Dependency }, level: string[], callback?: (context: any) => Promise<any>) => {
   const keyIndexMap: { [key: string]: number } = {};
   const levelPromises = [];
   for (const id of level) {
@@ -14,14 +14,16 @@ const resolveLevel = async (list: Dependency[], resolved: { [key: string]: Depen
   }
   const results = await Promise.all(levelPromises);
   if (callback) {
+    const callbackPromises: Array<Promise<any>> = [];
     results.forEach((result) => {
-      callback(result);
+      callbackPromises.push(callback(result));
     });
+    await Promise.all(callbackPromises);
   }
   Object.keys(keyIndexMap).forEach(key => resolved[key] = results[keyIndexMap[key]]);
 };
 
-export const resolve = async <TOutput = any>(dependencyList: Array<Dependency<TOutput>>, callback?: (context: any) => any) => {
+export const resolve = async <TOutput = any>(dependencyList: Array<Dependency<TOutput>>, callback?: (context: any) => Promise<any>) => {
 
   const levels = [];
 
