@@ -1,6 +1,6 @@
 {
   "name": "wild-fig",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Wild Fig resolves dependency trees declared using a flat specification",
   "main": "lib/index.js",
   "repository": "https://github.com/chrismcleod/wild-fig",
