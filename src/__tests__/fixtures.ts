@@ -53,6 +53,9 @@ export const dependencies = [
       g: 'g service',
     }),
   },
+  {
+    id: 'h'
+  }
 ];
 
 export const missingDependencies = [
@@ -61,6 +64,30 @@ export const missingDependencies = [
     dependsOn: [ 'b'],
     factory: async ({ b }: any) => ({
       a: 'a service',
+    }),
+  }
+];
+
+export const cyclicDependencies = [
+  {
+    id: 'a',
+    dependsOn: [ 'b' ],
+    factory: async ({ b }: any) => ({
+      a: 'a service',
+    }),
+  },
+  {
+    id: 'b',
+    dependsOn: [ 'c' ],
+    factory: async ({ c }: any) => ({
+      b: 'b service',
+    }),
+  },
+  {
+    id: 'c',
+    dependsOn: [ 'a' ],
+    factory: async ({ a }: any) => ({
+      c: 'c service',
     }),
   }
 ];

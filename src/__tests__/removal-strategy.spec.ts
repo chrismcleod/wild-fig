@@ -1,5 +1,5 @@
-import { resolve } from '../removal-strategy';
-import { dependencies, missingDependencies } from './fixtures';
+import { resolve } from '../';
+import { cyclicDependencies, dependencies, missingDependencies } from './fixtures';
 
 describe('resolve', () => {
   it('resolves all dependencies', async () => {
@@ -34,10 +34,16 @@ describe('resolve', () => {
 
     expect(services.g).not.toBeFalsy();
     expect(services.g.deps).toBeFalsy();
+
+    expect(services.h).not.toBeFalsy();
   });
 
   it('throws an error for missing dependencies', async () => {
     expect(resolve(missingDependencies)).rejects.toThrow('Missing dependencies b')
+  })
+
+  it('throws an error for cyclic dependencies', async () => {
+    expect(resolve(cyclicDependencies)).rejects.toThrow('There is a cyclic dependency in the dependency graph.')
   })
 
   it('invokes callback with result of each resolution invocation', async () => {
@@ -50,6 +56,7 @@ describe('resolve', () => {
     expect(spy).toHaveBeenCalledWith(services.e);
     expect(spy).toHaveBeenCalledWith(services.f);
     expect(spy).toHaveBeenCalledWith(services.g);
-    expect(spy).toHaveBeenCalledTimes(7);
+    expect(spy).toHaveBeenCalledWith(services.h);
+    expect(spy).toHaveBeenCalledTimes(8);
   });
 });
