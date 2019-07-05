@@ -1,5 +1,4 @@
 import { compose, filter, isEmpty, not, reverse } from 'ramda';
-
 import { Dependency } from './types';
 
 const moveDownToLevel = (list: string[][], id: string, level: number) => {
@@ -71,7 +70,7 @@ export const resolve = async <TOutput extends { [ key: string ]: any } = any>(de
       }
     }
     const results = await Promise.all(promises);
-    Object.keys(keyIndexMap).forEach(key => dependencies[ key ] = results[ keyIndexMap[ key ] ]);
+    Object.keys(keyIndexMap).forEach(key => dependencies[ key as keyof typeof dependencies ] = results[ keyIndexMap[ key ] ]);
   };
   const levelOrderedDependencies = reverse(filter(compose(not, isEmpty))(orderedList));
   for (const level of levelOrderedDependencies) {

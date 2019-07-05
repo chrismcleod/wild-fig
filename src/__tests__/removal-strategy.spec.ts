@@ -1,6 +1,5 @@
 import { resolve } from '../removal-strategy';
-
-import { dependencies } from './fixtures';
+import { dependencies, missingDependencies } from './fixtures';
 
 describe('resolve', () => {
   it('resolves all dependencies', async () => {
@@ -36,6 +35,10 @@ describe('resolve', () => {
     expect(services.g).not.toBeFalsy();
     expect(services.g.deps).toBeFalsy();
   });
+
+  it('throws an error for missing dependencies', async () => {
+    expect(resolve(missingDependencies)).rejects.toThrow('Missing dependencies b')
+  })
 
   it('invokes callback with result of each resolution invocation', async () => {
     const spy = jest.fn();

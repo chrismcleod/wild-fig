@@ -54,3 +54,13 @@ export const dependencies = [
     }),
   },
 ];
+
+export const missingDependencies = [
+  {
+    id: 'a',
+    dependsOn: [ 'b'],
+    factory: async ({ b }: any) => ({
+      a: 'a service',
+    }),
+  }
+];

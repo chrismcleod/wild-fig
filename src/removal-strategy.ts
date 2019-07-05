@@ -1,5 +1,4 @@
-import { difference, filter, isEmpty, omit } from 'ramda';
-
+import r from 'ramda';
 import { Dependency } from './types';
 
 const resolveLevel = async (list: Dependency[], resolved: { [key: string]: Dependency }, level: string[], callback?: (context: any) => Promise<any>) => {
@@ -8,7 +7,7 @@ const resolveLevel = async (list: Dependency[], resolved: { [key: string]: Depen
   for (const id of level) {
     const dep = list.find(d => d.id === id);
     if (dep) {
-      const promise = dep.factory(filter(Boolean, resolved));
+      const promise = dep.factory(r.filter(Boolean, resolved));
       keyIndexMap[id] = levelPromises.push(promise) - 1;
     }
   }
@@ -25,6 +24,16 @@ const resolveLevel = async (list: Dependency[], resolved: { [key: string]: Depen
 
 export const resolve = async <TOutput = any>(dependencyList: Array<Dependency<TOutput>>, callback?: (context: any) => Promise<any>) => {
 
+  const ids = r.pluck<'id', string>('id', dependencyList);
+  const missing = r.pipe(
+    r.map((dep: Dependency) => dep.dependsOn || []),
+    (list) => r.flatten<string>(list),
+    (list) => r.reject(r.isNil, list),
+    (list) => r.uniq(list),
+    (list) => r.difference(list, ids)
+  )(dependencyList);
+  if(missing.length > 0) throw new Error(`Missing dependencies ${missing.join(', ')}`)
+
   const levels = [];
 
   let nameToDependencies = dependencyList.reduce<{ [key: string]: string[] }>((output, dependency) => {
@@ -32,16 +41,16 @@ export const resolve = async <TOutput = any>(dependencyList: Array<Dependency<TO
     return output;
   }, {});
 
-  while (!isEmpty(nameToDependencies)) {
+  while (!r.isEmpty(nameToDependencies)) {
     const emptyDependencyIds = Object.entries(nameToDependencies).filter(([_id, dependency]) => dependency.length === 0).map(([id]) => id);
     if (emptyDependencyIds.length === 0) throw new Error('Either a depedency is undefined in the tree, or there is a circular dependency in the dependency graph.');
     levels.push(emptyDependencyIds);
     for (const id in nameToDependencies) {
       if (nameToDependencies.hasOwnProperty(id)) {
-        nameToDependencies[id] = difference(nameToDependencies[id], emptyDependencyIds);
+        nameToDependencies[id] = r.difference(nameToDependencies[id], emptyDependencyIds);
       }
     }
-    nameToDependencies = omit(emptyDependencyIds, nameToDependencies);
+    nameToDependencies = r.omit(emptyDependencyIds, nameToDependencies);
   }
 
   const resolved = {} as any;
