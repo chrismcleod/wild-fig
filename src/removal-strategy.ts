@@ -1,4 +1,4 @@
-import r from 'ramda';
+import * as r from 'ramda';
 import { Dependency } from './types';
 
 const resolveLevel = async (list: Dependency[], resolved: { [key: string]: Dependency }, level: string[], callback?: (context: any) => Promise<any>) => {
@@ -27,7 +27,7 @@ const resolveLevel = async (list: Dependency[], resolved: { [key: string]: Depen
 
 export const resolve = async <TOutput = any>(dependencyList: Array<Dependency<TOutput>>, callback?: (context: any) => Promise<any>) => {
 
-  const ids = r.pluck<'id', string>('id', dependencyList);
+  const ids = r.pluck('id', dependencyList);
   const missing = r.pipe(
     r.map((dep: Dependency) => r.defaultTo([], dep.dependsOn)),
     (list) => r.flatten<string>(list),

@@ -15,12 +15,12 @@
     "tslib": "^1.9.3"
   },
   "dependencies": {
-    "ramda": "^0.25.0"
+    "ramda": "^0.26.1"
   },
   "devDependencies": {
     "@types/benchmark": "^1.0.31",
     "@types/jest": "^23.1.0",
-    "@types/ramda": "^0.25.33",
+    "@types/ramda": "^0.26.21",
     "benchmark": "^2.1.4",
     "jest": "^23.1.0",
     "ts-jest": "^22.4.6",
