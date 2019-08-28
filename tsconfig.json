@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "importHelpers": true,
     "inlineSourceMap": true,
+    "inlineSources": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
